@@ -1,0 +1,12 @@
+[submodule "lib/Adafruit_BusIO"]
+	path = lib/Adafruit_BusIO
+	url = git@github.com:adafruit/Adafruit_BusIO.git
+[submodule "lib/Adafruit-GFX-Library"]
+	path = lib/Adafruit-GFX-Library
+	url = git@github.com:adafruit/Adafruit-GFX-Library.git
+[submodule "lib/Adafrui_SH110x"]
+	path = lib/Adafrui_SH110x
+	url = git@github.com:adafruit/Adafruit_SH110x.git
+[submodule "lib/Seeed_Arduino_CAN"]
+	path = lib/Seeed_Arduino_CAN
+	url = git@github.com:Seeed-Studio/Seeed_Arduino_CAN.git
