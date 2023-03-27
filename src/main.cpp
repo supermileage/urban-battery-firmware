@@ -1,12 +1,20 @@
 #include <Arduino.h>
 #include "mcp2515_can.h"
+#include "can_common.h"
 
 #define SERIAL_SPEED 115200 // one of most common serial port speeds
 #define CAN_CS_PIN  10 // PIN D10
 #define CAN_SPEED CAN_500KBPS // speed of CAN network (fixed for car)
 #define CAN_CONTROLLER_SPEED MCP_8MHz // speed of crystal
-#define DEBUG_MSG_RECEIVE 1 // change to 0 if using battery 
+#define DEBUG_MSG_RECEIVE 1 // change to 0 if using battery
+#define CAN_BATT_SOC_SCALING_FACTOR 2.0
+#define CAN_BATT_VOLTAGE_SCALING_FACTOR 10.0
+
 mcp2515_can can(CAN_CS_PIN); // creating CAN object
+
+// Global varible declaration
+float voltage = 0.0;
+float soc = 0.0;
 
 // This struct contains all the components of a CAN message. dataLength must be <= 8, 
 // and the first [dataLength] positions of data[] must contain valid data
@@ -16,6 +24,8 @@ typedef uint8_t CanBuffer[8];
 			uint8_t dataLength;
 			CanBuffer data;
 	};
+
+
 
 String getErrorDescription(int errorCode){
     switch(errorCode){
@@ -77,7 +87,12 @@ void receive() {
         }
         Serial.println();
     }
-
+    if (message.id == CAN_ORIONBMS_PACK) {
+            uint8_t socData = message.data[4];
+            soc = socData / CAN_BATT_SOC_SCALING_FACTOR;
+            uint16_t voltageData = message.data[1] | message.data[0] << 8;
+            voltage = voltageData / CAN_BATT_VOLTAGE_SCALING_FACTOR;
+    }
 }
 void loop() {
      // Listen for CAN messages
