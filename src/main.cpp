@@ -13,8 +13,8 @@
 mcp2515_can can(CAN_CS_PIN); // creating CAN object
 
 // Global varible declaration
-float voltage = 0.0;
-float soc = 0.0;
+float voltage = -1.0;
+float soc = -1.0;
 
 // This struct contains all the components of a CAN message. dataLength must be <= 8, 
 // and the first [dataLength] positions of data[] must contain valid data
