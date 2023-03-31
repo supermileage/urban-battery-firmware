@@ -10,3 +10,6 @@
 [submodule "lib/Seeed_Arduino_CAN"]
 	path = lib/Seeed_Arduino_CAN
 	url = git@github.com:Seeed-Studio/Seeed_Arduino_CAN.git
+[submodule "lib/can-common"]
+	path = lib/can-common
+	url = git@github.com:supermileage/can-common.git
