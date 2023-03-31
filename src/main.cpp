@@ -6,7 +6,7 @@
 #define CAN_CS_PIN  10 // PIN D10
 #define CAN_SPEED CAN_500KBPS // speed of CAN network (fixed for car)
 #define CAN_CONTROLLER_SPEED MCP_8MHz // speed of crystal
-#define DEBUG_MSG_RECEIVE 1 // change to 0 if using battery
+#define DEBUG_MSG_RECEIVE 0 // change to 0 if using battery
 #define CAN_BATT_SOC_SCALING_FACTOR 2.0
 #define CAN_BATT_VOLTAGE_SCALING_FACTOR 10.0
 
@@ -90,8 +90,12 @@ void receive() {
     if (message.id == CAN_ORIONBMS_PACK) {
             uint8_t socData = message.data[4];
             soc = socData / CAN_BATT_SOC_SCALING_FACTOR;
+            Serial.print("state of charge = ");
+            Serial.println(soc);
             uint16_t voltageData = message.data[1] | message.data[0] << 8;
             voltage = voltageData / CAN_BATT_VOLTAGE_SCALING_FACTOR;
+            Serial.print("voltage = ");
+            Serial.println(voltage);
     }
 }
 void loop() {
