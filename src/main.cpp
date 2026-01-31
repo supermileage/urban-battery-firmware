@@ -31,7 +31,7 @@ typedef uint8_t CanBuffer[8];
 	};
 
 // pass in width and length of screen
-Adafruit_SH1107 oled(64, 128); 
+Adafruit_SH1106G oled(128, 64); 
 
 String getErrorDescription(int errorCode){
     switch(errorCode){
@@ -79,8 +79,10 @@ void setup() {
     currentButtonState = digitalRead(BUTTON_PIN);
 
     // Screen initialization
-    oled.begin(0x3C, false);
-    oled.setRotation(1);
+    oled.begin(0x3C, true);
+    oled.setRotation(2);
+    // Flip Y-axis for panels wired with opposite COM scan direction
+    oled.oled_command(SH110X_COMSCANINC);
 
     oled.clearDisplay();
     oled.display();
@@ -161,4 +163,3 @@ void loop() {
 
     }
 }
-
